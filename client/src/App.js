@@ -8,28 +8,22 @@ const baseURL = "/api"
 function App() {
   const [data, setData] = useState(null)
 
-  // FETCH
+  // AXIOS SYNC
   // useEffect(() => {
-  //   fetch("/api")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data.message));
-  // }, []);
+  //   axios.get(baseURL).then((response) => {
+  //     console.log("response.data ", response.data)
+  //     setData(response.data.message)
+  //   })
+  // }, [])
+  
 
-  // return (
-  //   <div className="App">
-  //     <header className="App-header">
-  //       <img src={logo} className="App-logo" alt="logo" />
-  //       <p>{!data ? "Loading..." : data}</p>
-  //     </header>
-  //   </div>
-  // );
-
-  // AXIOS
+  // AXIOS ASYNC/AWAIT
   useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      console.log("response.data ", response.data)
+    async function getData() {
+      const response = await axios.get(baseURL)
       setData(response.data.message)
-    })
+    }
+    getData()
   }, [])
 
   if (!data) return null
