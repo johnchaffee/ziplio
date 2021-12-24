@@ -2,40 +2,31 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import logo from "./logo.svg"
 import "./App.css"
+import Messages from "./Messages"
 
-const baseURL = "/api"
+const baseURL = "/api/messages"
 
 function App() {
-  const [data, setData] = useState(null)
+  const [messages, setMessages] = useState(null)
+  console.log("Messages: \n", messages)
 
-  // AXIOS SYNC
-  // useEffect(() => {
-  //   axios.get(baseURL).then((response) => {
-  //     console.log("response.data ", response.data)
-  //     setData(response.data.message)
-  //   })
-  // }, [])
-  
-
-  // AXIOS ASYNC/AWAIT
+  // ASYNC AXIOS
   useEffect(() => {
-    async function getData() {
+    async function getMessages() {
       const response = await axios.get(baseURL)
-      setData(response.data.message)
+      setMessages(response.data)
     }
-    getData()
+    getMessages()
   }, [])
 
-  if (!data) return null
+  if (!messages) return null
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
+      <Messages messages={messages} />
     </div>
   )
+
 }
 
 export default App
