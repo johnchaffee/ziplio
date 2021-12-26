@@ -6,7 +6,7 @@ const app = express();
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-app.get("/api/messages", (req, res) => {
+app.get("/messages", (req, res) => {
   const messages = [
     { id: 1, body: "Hello there", direction: "inbound" },
     { id: 2, body: "Hi", direction: "outbound" },

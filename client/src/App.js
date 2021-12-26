@@ -4,7 +4,7 @@ import logo from "./logo.svg"
 import "./App.css"
 import Messages from "./Messages"
 
-const baseURL = "/api/messages"
+const baseURL = "/messages"
 
 function App() {
   const [messages, setMessages] = useState(null)
