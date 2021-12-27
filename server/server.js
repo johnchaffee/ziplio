@@ -9,6 +9,13 @@ const limit = 10
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")))
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// Import and use routes
+const webhooksRouter = require("./routes/webhooks")
+app.use("/twilio-webhook", webhooksRouter)
+
 app.get("/conversations", (req, res) => {
   console.log("/CONVERSATIONS")
 
