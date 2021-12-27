@@ -1,9 +1,9 @@
 import React from "react"
 
 export default function Messages({ messages }) {
+  console.log("RENDER MESSAGES")
   return (
     <div>
-      <h2>Messages</h2>
       {messages.map((message) => (
         <p key={message.id}>{message.body}</p>
       ))}
