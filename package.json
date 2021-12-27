@@ -2,12 +2,12 @@
   "name": "react-node-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "client-install": "cd client && npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js",
-    "server": "nodemon server/index.js",
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
     "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd client && npm install && npm run build"
