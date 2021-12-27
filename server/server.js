@@ -23,7 +23,6 @@ app.get("/conversations", (req, res) => {
       conversations.forEach((conversation) => {
         conversation.type = "conversationUpdated"
       })
-      console.log("db conversations: ", conversations)
       res.json(conversations)
     } catch (err) {
       console.log("getConversations() CATCH")
@@ -50,7 +49,6 @@ app.get("/messages", (req, res) => {
       messages.forEach((message) => {
         message.type = "messageCreated"
       })
-      console.log("db messages: ", messages)
       res.json(messages)
     } catch (err) {
       console.error(err)

@@ -7,10 +7,6 @@ import Conversations from "./Conversations"
 function App() {
   console.log("RENDER APP")
 
-  function getRandomNum(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-  }
-
   // MESSAGES STATE
   const [messages, setMessages] = useState(null)
   console.log("messages: \n", messages)
@@ -19,13 +15,9 @@ function App() {
   useEffect(() => {
     async function getMessages() {
       const response = await axios.get("/messages")
-      // setMessages(response.data)
-      setMessages(response.data.slice(0, getRandomNum(1, 10)))
+      setMessages(response.data)
     }
-    // getMessages(4)
-    setInterval(function () {
-      getMessages()
-    }, 2000)
+    getMessages()
   }, [])
 
   // CONVERSATIONS STATE
@@ -36,13 +28,9 @@ function App() {
   useEffect(() => {
     async function getConversations() {
       const response = await axios.get("/conversations")
-      // setConversations(response.data)
-      setConversations(response.data.slice(0, getRandomNum(1, 10)))
+      setConversations(response.data)
     }
-    // getConversations(4)
-    setInterval(function () {
-      getConversations()
-    }, 2000)
+    getConversations()
   }, [])
 
   if (!messages) return null
