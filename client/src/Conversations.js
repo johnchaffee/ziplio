@@ -5,7 +5,7 @@ export default function Conversations({ conversations }) {
   return (
     <div>
       {conversations.map((conversation) => (
-        <p key={conversation.id}>{conversation.name}: {conversation.mobileNumber}</p>
+        <p key={conversation.id}>{conversation.contact_name}: {conversation.conversation_id}</p>
       ))}
     </div>
   )

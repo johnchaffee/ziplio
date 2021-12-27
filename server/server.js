@@ -1,39 +1,73 @@
-const path = require('path');
-const express = require("express");
-const PORT = process.env.PORT || 3001;
-const app = express();
+require("dotenv").config()
+const path = require("path")
+const express = require("express")
+const PORT = process.env.PORT || 3001
+const app = express()
+const db = require("./database")
+const limit = 10
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.resolve(__dirname, "../client/build")))
 
 app.get("/conversations", (req, res) => {
   console.log("/CONVERSATIONS")
-  const conversations = [
-    { id: 1, mobileNumber: "+12063996576", name: "John" },
-    { id: 2, mobileNumber: "+12063693826", name: "Lani" },
-    { id: 3, mobileNumber: "+12067245201", name: "Mike" },
-    { id: 4, mobileNumber: "+12067245169", name: "Lynn" },
-  ]
-  res.json(conversations);
-});
+
+  async function getConversations() {
+    console.log("getConversations():")
+    try {
+      const result = await db.pool.query(
+        "SELECT * FROM conversations WHERE status = 'open' order by date_updated desc limit $1",
+        [limit]
+      )
+      conversations = result.rows
+      conversations.forEach((conversation) => {
+        conversation.type = "conversationUpdated"
+      })
+      console.log("db conversations: ", conversations)
+      res.json(conversations)
+    } catch (err) {
+      console.log("getConversations() CATCH")
+      console.error(err)
+    }
+  }
+  getConversations("+12063996576").then(function () {
+    console.log("GET CONVERSATIONS .THEN")
+  })
+})
 
 app.get("/messages", (req, res) => {
   console.log("/MESSAGES")
-  const messages = [
-    { id: 1, body: "Hello there", direction: "inbound" },
-    { id: 2, body: "Hi", direction: "outbound" },
-    { id: 3, body: "How are you?", direction: "inbound" },
-    { id: 4, body: "I'm fine", direction: "outbound" }
-  ]
-  res.json(messages);
-});
+
+  async function getMessages(mobileNumberQuery) {
+    console.log("getMessages():")
+    try {
+      const result = await db.pool.query(
+        "SELECT * FROM messages WHERE mobile_number = $1 order by date_created desc limit $2",
+        [mobileNumberQuery, limit]
+      )
+
+      messages = result.rows.reverse()
+      messages.forEach((message) => {
+        message.type = "messageCreated"
+      })
+      console.log("db messages: ", messages)
+      res.json(messages)
+    } catch (err) {
+      console.error(err)
+      res.send("Error " + err)
+    }
+  }
+  getMessages("+12063996576").then(function () {
+    console.log("GET MESSAGES .THEN")
+  })
+})
 
 // All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
+app.get("*", (req, res) => {
   console.log("* CATCHALL")
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"))
+})
 
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+  console.log(`Server listening on ${PORT}`)
+})

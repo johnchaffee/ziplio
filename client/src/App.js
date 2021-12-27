@@ -19,8 +19,8 @@ function App() {
   useEffect(() => {
     async function getMessages() {
       const response = await axios.get("/messages")
-      setMessages(response.data.slice(0, getRandomNum(1, 4)))
       // setMessages(response.data)
+      setMessages(response.data.slice(0, getRandomNum(1, 10)))
     }
     // getMessages(4)
     setInterval(function () {
@@ -36,7 +36,8 @@ function App() {
   useEffect(() => {
     async function getConversations() {
       const response = await axios.get("/conversations")
-      setConversations(response.data)
+      // setConversations(response.data)
+      setConversations(response.data.slice(0, getRandomNum(1, 10)))
     }
     // getConversations(4)
     setInterval(function () {
