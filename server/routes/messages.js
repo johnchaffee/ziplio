@@ -1,8 +1,10 @@
 require("dotenv").config()
 const express = require("express")
 const router = express.Router()
+const db = require("../database")
 const axios = require("axios").default
 const qs = require('qs');
+const limit = 10
 
 const app_host_name = process.env.APP_HOST_NAME || "localhost"
 const ngrok_url = process.env.NGROK_URL
@@ -19,6 +21,32 @@ const twilio_auth_token = process.env.TWILIO_AUTH_TOKEN
 const auth_header =
   "Basic " +
   Buffer.from(twilio_account_sid + ":" + twilio_auth_token).toString("base64")
+
+  router.get("/", (req, res) => {
+    console.log("/MESSAGES")
+  
+    async function getMessages(mobileNumberQuery) {
+      console.log("getMessages():")
+      try {
+        const result = await db.pool.query(
+          "SELECT * FROM messages WHERE mobile_number = $1 order by date_created desc limit $2",
+          [mobileNumberQuery, limit]
+        )
+  
+        messages = result.rows.reverse()
+        messages.forEach((message) => {
+          message.type = "messageCreated"
+        })
+        res.json(messages)
+      } catch (err) {
+        console.error(err)
+        res.send("Error " + err)
+      }
+    }
+    getMessages("+12063996576").then(function () {
+      console.log("GET MESSAGES .THEN")
+    })
+  })
 
 // SEND OUTGOING MESSAGE
 // Web client posts '/messages' request to this server, which posts request to Twilio API
