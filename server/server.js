@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: true }))
 const webhooksRouter = require("./routes/webhooks")
 app.use("/twilio-webhook", webhooksRouter)
 
+const messagesendRouter = require("./routes/messages")
+app.use("/messages", messagesendRouter)
+
 app.get("/conversations", (req, res) => {
   console.log("/CONVERSATIONS")
 

@@ -1,6 +1,7 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import "./App.css"
+import SendMessage from "./SendMessage"
 import Messages from "./Messages"
 import Conversations from "./Conversations"
 
@@ -39,6 +40,8 @@ function App() {
   return (
     <>
       <div className="App">
+        <h2>SendMessage</h2>
+        <SendMessage />
         <h2>Conversations</h2>
         <Conversations conversations={conversations} />
         <h2>Messages</h2>
