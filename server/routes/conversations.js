@@ -2,7 +2,7 @@ require("dotenv").config()
 const express = require("express")
 const router = express.Router()
 const db = require("../database")
-const limit = 10
+const limit = process.env.LIMIT
 
 const app_host_name = process.env.APP_HOST_NAME || "localhost"
 const ngrok_url = process.env.NGROK_URL

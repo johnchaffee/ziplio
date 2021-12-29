@@ -1,26 +1,17 @@
 import axios from "axios"
-import React from "react"
+import React, { useState } from "react"
 
-export default class NameForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { value: "" }
+export default function SendMessage() {
+  const [messageBody, setMessageBody] = useState("")
+  const [mobileNumber, setMobileNumber] = useState("")
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value })
-  }
-
-  handleSubmit(event) {
-    alert("A message was submitted: " + this.state.value)
-    console.log("this.state.value: ", this.state.value)
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log(`Submitting Message "${messageBody}" to ${mobileNumber}`)
     axios
       .post("./messages", {
-        body: this.state.value,
-        mobile_number: "+12063996576",
+        body: messageBody,
+        mobile_number: mobileNumber,
         media_url: null,
       })
       .then(function (response) {
@@ -31,23 +22,28 @@ export default class NameForm extends React.Component {
         console.log("MESSAGE SEND CATCH:")
         console.log(error)
       })
-    event.preventDefault()
-    this.setState({ value: "" })
+    setMessageBody("")
   }
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Send Message:
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    )
-  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Mobile:
+        <input
+          type="text"
+          value={mobileNumber}
+          onChange={(e) => setMobileNumber(e.target.value)}
+        />
+      </label>
+      <label>
+        Body:
+        <input
+          type="text"
+          value={messageBody}
+          onChange={(e) => setMessageBody(e.target.value)}
+        />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  )
 }
