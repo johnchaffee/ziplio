@@ -1,4 +1,4 @@
-// const client = require("./client")
+const client = require("./client")
 const app_host_name = process.env.APP_HOST_NAME || "localhost"
 
 // POSTGRES DATABASE QUERIES
@@ -36,7 +36,7 @@ async function createMessage(request, response) {
       media_url,
     } = request
     const result = await pool.query(
-      "INSERT INTO messages (date_created, direction, twilio_number, mobile_number, conversation_id, body, media_url) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+      "INSERT INTO messages (date_created, direction, twilio_number, mobile_number, conversation_id, body, media_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
       [
         date_created,
         direction,
@@ -47,12 +47,14 @@ async function createMessage(request, response) {
         media_url,
       ]
     )
+    console.log(result.rows[0])
+    messageObject.id = result.rows[0].id
   } catch (err) {
     console.error(err)
     // res.send("Error " + err);
   }
   // Send messasge to websocket clients
-  // client.updateWebsocketClient(messageObject)
+  client.updateWebsocketClient(messageObject)
 }
 
 // CREATE OR UPDATE CONVERSATION
@@ -64,10 +66,11 @@ async function updateConversation(request, response) {
     try {
       const { date_updated, conversation_id, unread_count, status } = request
       const result = await pool.query(
-        "INSERT INTO conversations (date_updated, conversation_id, unread_count, status) VALUES ($1, $2, $3, $4) ON CONFLICT (conversation_id) DO UPDATE SET date_updated = EXCLUDED.date_updated, unread_count = EXCLUDED.unread_count, status = EXCLUDED.status RETURNING unread_count, contact_name",
+        "INSERT INTO conversations (date_updated, conversation_id, unread_count, status) VALUES ($1, $2, $3, $4) ON CONFLICT (conversation_id) DO UPDATE SET date_updated = EXCLUDED.date_updated, unread_count = EXCLUDED.unread_count, status = EXCLUDED.status RETURNING id, unread_count, contact_name",
         [date_updated, conversation_id, unread_count, status]
       )
       console.log(result.rows[0])
+      conversationObject.id = result.rows[0].id
       conversationObject.unread_count = result.rows[0].unread_count
       conversationObject.contact_name = result.rows[0].contact_name
     } catch (err) {
@@ -80,10 +83,11 @@ async function updateConversation(request, response) {
     try {
       const { date_updated, conversation_id, unread_count, status } = request
       const result = await pool.query(
-        "INSERT INTO conversations (date_updated, conversation_id, unread_count, status) VALUES ($1, $2, $3, $4) ON CONFLICT (conversation_id) DO UPDATE SET date_updated = EXCLUDED.date_updated, unread_count = conversations.unread_count + EXCLUDED.unread_count, status = EXCLUDED.status RETURNING unread_count, contact_name",
+        "INSERT INTO conversations (date_updated, conversation_id, unread_count, status) VALUES ($1, $2, $3, $4) ON CONFLICT (conversation_id) DO UPDATE SET date_updated = EXCLUDED.date_updated, unread_count = conversations.unread_count + EXCLUDED.unread_count, status = EXCLUDED.status RETURNING id, unread_count, contact_name",
         [date_updated, conversation_id, unread_count, status]
       )
       console.log(result.rows[0].contact_name)
+      conversationObject.id = result.rows[0].id
       conversationObject.unread_count = result.rows[0].unread_count
       conversationObject.contact_name = result.rows[0].contact_name
     } catch (err) {
@@ -92,7 +96,7 @@ async function updateConversation(request, response) {
     }
   }
   // Send conversation to websocket clients
-  // client.updateWebsocketClient(conversationObject)
+  client.updateWebsocketClient(conversationObject)
 }
 
 // NAME CONVERSATION
