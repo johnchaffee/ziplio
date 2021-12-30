@@ -5,7 +5,11 @@ const path = require("path")
 const express = require("express")
 const port = process.env.PORT || 3001
 const app = express()
+const client = require("./client")
 const db = require("./database")
+let conversations = []
+let messages = []
+const limit = process.env.LIMIT
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")))
@@ -26,10 +30,6 @@ app.get("*", (req, res) => {
   console.log("* CATCHALL")
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"))
 })
-
-// app.listen(PORT, () => {
-//   console.log(`Server listening on ${PORT}`)
-// })
 
 // EXPRESS SERVER
 const server = app.listen(port, function () {
