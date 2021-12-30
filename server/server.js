@@ -65,8 +65,8 @@ wsServer.on("connection", (socketClient) => {
   console.log("Number of clients: ", wsServer.clients.size)
   socketClient.isAlive = true
   socketClient.on("pong", heartbeat)
-  socketClient.send(JSON.stringify(messages))
-  socketClient.send(JSON.stringify(conversations))
+  // socketClient.send(JSON.stringify(messages))
+  // socketClient.send(JSON.stringify(conversations))
 
   // ON MESSAGE
   // This is triggered by the client.updateWebsocketClient() function, it sends a single item array

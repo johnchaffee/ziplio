@@ -28,6 +28,7 @@ router.get("/", (req, res) => {
 
   async function getMessages(mobileNumberQuery) {
     console.log("getMessages():")
+    console.log("mobileNumberQuery: ", mobileNumberQuery)
     try {
       const result = await db.pool.query(
         "SELECT * FROM messages WHERE mobile_number = $1 order by date_created desc limit $2",

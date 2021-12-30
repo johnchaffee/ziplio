@@ -1,10 +1,10 @@
 import React from "react"
 
-export default function Messages({ messages }) {
-  console.log("RENDER MESSAGES")
+export default function Messages({ messagesList }) {
+  console.log("MESSAGES LIST: ", messagesList)
   return (
     <div>
-      {messages.map((message) => (
+      {messagesList.map((message) => (
         <p key={message.id}>{message.body}</p>
       ))}
     </div>
