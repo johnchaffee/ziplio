@@ -9,13 +9,17 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <h2>SendMessage</h2>
-        <SendMessage />
-        <h2>Conversations</h2>
-        <Conversations />
-        <h2>Messages</h2>
-        <Messages />
+      <div className="SplitPane">
+        <div className="SplitPane-left">
+          <h2>Conversations</h2>
+          <Conversations />
+        </div>
+        <div className="SplitPane-right">
+          <h2>Messages</h2>
+          <Messages />
+          <h2>SendMessage</h2>
+          <SendMessage />
+        </div>
       </div>
     </>
   )
@@ -32,13 +36,12 @@ const mobileParamDecoded = decodeURIComponent(mobileParam) // +12065551111
 export const mobileNumber = mobileParamDecoded
 console.log(`URL PARAM MOBILE NUMBER: ${mobileNumber}`)
 
-
 const host = window.location.origin
 console.log(`HOST: ${host}`)
 
 const wsHost = host.replace(/^http/, "ws").replace("3000", "3001")
 console.log(`WSHOST: ${wsHost}`)
- 
+
 export const wsClient = new WebSocket(wsHost)
 
 wsClient.onopen = () => {
@@ -51,4 +54,4 @@ wsClient.onclose = () => {
   console.log("ON CLOSE")
 }
 
-export default App;
+export default App

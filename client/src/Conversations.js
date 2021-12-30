@@ -49,7 +49,7 @@ export default function Conversations() {
     <div>
       {conversationsList.map((conversation) => (
         <p key={conversation.id}>
-          {conversation.contact_name}: {conversation.conversation_id}
+          {conversation.contact_name}: {conversation.conversation_id.split(";")[1]}
         </p>
       ))}
     </div>
