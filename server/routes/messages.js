@@ -22,6 +22,7 @@ const auth_header =
   "Basic " +
   Buffer.from(twilio_account_sid + ":" + twilio_auth_token).toString("base64")
 
+  // GET /messages
 router.get("/", (req, res) => {
   console.log("/MESSAGES")
 
@@ -48,7 +49,7 @@ router.get("/", (req, res) => {
   })
 })
 
-// SEND OUTGOING MESSAGE
+// POST /messages
 // Web client posts '/messages' request to this server, which posts request to Twilio API
 router.post("/", (req, res, next) => {
   console.log("/messages")
