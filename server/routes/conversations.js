@@ -35,7 +35,7 @@ router.get("/", (req, res) => {
       console.error(err)
     }
   }
-  getConversations("+12063996576").then(function () {
+  getConversations().then(function () {
     console.log("GET CONVERSATIONS .THEN")
   })
 })

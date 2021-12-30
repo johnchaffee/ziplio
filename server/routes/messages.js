@@ -22,9 +22,20 @@ const auth_header =
   "Basic " +
   Buffer.from(twilio_account_sid + ":" + twilio_auth_token).toString("base64")
 
-  // GET /messages
+// GET /messages
 router.get("/", (req, res) => {
   console.log("/MESSAGES")
+
+  console.log("REQ.QUERY:")
+  console.log(req.query)
+  let queryObjSize = JSON.stringify(req.query).length
+  console.log("REQ.QUERY.MOBILE")
+  console.log(`${req.query.mobile}`)
+  let mobileNumberQuery = ""
+  // Check if query param object is greater than empty object {} length of 2
+  if (queryObjSize > 2) {
+    mobileNumberQuery = `+${req.query.mobile.replace(" ", "")}`
+  }
 
   async function getMessages(mobileNumberQuery) {
     console.log("getMessages():")
@@ -45,7 +56,7 @@ router.get("/", (req, res) => {
       res.send("Error " + err)
     }
   }
-  getMessages("+12063996576").then(function () {
+  getMessages(mobileNumberQuery).then(function () {
     console.log("GET MESSAGES .THEN")
   })
 })

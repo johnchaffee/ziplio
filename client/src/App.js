@@ -16,7 +16,7 @@ export default function App() {
   useEffect(() => {
     async function getMessages() {
       // On first load fetch all the messages and set messagesList array
-      const response = await axios.get("/messages")
+      const response = await axios.get(`/messages?mobile=${mobile_number}`)
       setMessagesList(response.data)
     }
     getMessages()
@@ -41,16 +41,16 @@ export default function App() {
     console.log("CLIENT ONMESSAGE")
     console.log(messages)
     // Play Audio for incoming and outgoing messages
-    if (messages.length === 1 && messages[0].type == "messageCreated") {
+    if (messages.length === 1 && messages[0].type === "messageCreated") {
       const now = Date.parse(new Date())
       const delivered = Date.parse(messages[0].date_created)
       const inboundAudio = new Audio("/inboundAudio.mp3")
       const outboundAudio = new Audio("/outboundAudio.mp3")
       // Only play a sound for new messages delivered within last 2 seconds
       if (now - delivered < 2000) {
-        if (messages[0].direction == "inbound") {
+        if (messages[0].direction === "inbound") {
           inboundAudio.play()
-        } else if (messages[0].direction == "outbound") {
+        } else if (messages[0].direction === "outbound") {
           outboundAudio.play()
         }
       }
@@ -59,8 +59,8 @@ export default function App() {
       messages.forEach((thisMessage) => {
         // If type is messagecreated and matches selected conversation, render message
         if (
-          thisMessage.type == "messageCreated" &&
-          thisMessage.mobile_number == mobile_number
+          thisMessage.type === "messageCreated" &&
+          thisMessage.mobile_number === mobile_number
         ) {
           console.log("APPEND MESSAGE")
           console.log("THIS MESSAGE: ", thisMessage)
