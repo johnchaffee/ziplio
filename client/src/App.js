@@ -39,7 +39,12 @@ console.log(`URL PARAM MOBILE NUMBER: ${mobileNumber}`)
 const host = window.location.origin
 console.log(`HOST: ${host}`)
 
-const wsHost = host.replace(/^http/, "ws").replace("3000", "3001")
+let wsHost
+if (process.env.NODE_ENV === "development") {
+  wsHost = host.replace(/^http/, "ws").replace("3000", "3001")
+} else {
+  wsHost = host.replace(/^http/, "ws")
+}
 console.log(`WSHOST: ${wsHost}`)
 
 export const wsClient = new WebSocket(wsHost)
