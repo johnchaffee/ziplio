@@ -1,9 +1,9 @@
 import axios from "axios"
 import React, { useState } from "react"
+import { mobileNumber } from "./App"
 
 export default function SendMessage() {
   const [messageBody, setMessageBody] = useState("")
-  const [mobileNumber, setMobileNumber] = useState("")
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -27,14 +27,6 @@ export default function SendMessage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Mobile:
-        <input
-          type="text"
-          value={mobileNumber}
-          onChange={(e) => setMobileNumber(e.target.value)}
-        />
-      </label>
       <label>
         Body:
         <input
