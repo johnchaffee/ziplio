@@ -9,12 +9,13 @@ export default function Conversations() {
   const [conversationsList, setConversationsList] = useState(null)
   console.log("conversationsList: \n", conversationsList)
 
+  async function getConversations() {
+    const response = await axios.get("/conversations")
+    setConversationsList(response.data)
+  }
+
   // ASYNC AXIOS GET CONVERSATIONS
   useEffect(() => {
-    async function getConversations() {
-      const response = await axios.get("/conversations")
-      setConversationsList(response.data)
-    }
     getConversations()
   }, [])
 
@@ -137,10 +138,6 @@ export default function Conversations() {
           .then(function (response) {
             console.log("UPDATE CONTACT SUCCESS:")
             console.log(response)
-            async function getConversations() {
-              const response = await axios.get("/conversations")
-              setConversationsList(response.data)
-            }
             getConversations()
           })
           .catch(function (error) {
@@ -168,10 +165,6 @@ export default function Conversations() {
           .then(function (response) {
             console.log("ARCHIVE CONVERSATION SUCCESS:")
             console.log(response)
-            async function getConversations() {
-              const response = await axios.get("/conversations")
-              setConversationsList(response.data)
-            }
             getConversations()
             window.location = "./"
           })
