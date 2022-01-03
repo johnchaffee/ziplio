@@ -1,50 +1,8 @@
 import axios from "axios"
-import React, { useEffect, useState } from "react"
-import { wsClient } from "./App"
+import React from "react"
 
-export default function Conversations() {
+export default function Conversations({ conversationsList }) {
   console.log("RENDER CONVERSATIONS")
-
-  // CONVERSATIONS STATE
-  const [conversationsList, setConversationsList] = useState(null)
-  console.log("conversationsList: \n", conversationsList)
-
-  async function getConversations() {
-    const response = await axios.get("/conversations")
-    setConversationsList(response.data)
-  }
-
-  // ASYNC AXIOS GET CONVERSATIONS
-  useEffect(() => {
-    getConversations()
-  }, [])
-
-  // MESSAGE RECEIVED FROM SERVER ->
-  wsClient.onmessage = (event) => {
-    const messages = JSON.parse(event.data)
-    console.log("CLIENT ON MESSAGE")
-    console.log(messages)
-    // Play Audio for incoming and outgoing messages
-    if (
-      messages.length > 0 &&
-      messages[0].type !== undefined &&
-      messages[0].type.startsWith("conversation")
-    ) {
-      // If first array type is conversationSomething, update conversationList and re-render conversation list
-      console.log("MESSAGES[0]: ", messages[0])
-      let updateConversationList = conversationsList.filter(
-        (conversation) => conversation.id !== messages[0].id
-      )
-      updateConversationList.unshift(messages[0])
-      console.log("UPDATE CONVERSATION LIST: ", updateConversationList)
-      setConversationsList(updateConversationList)
-    } else {
-      console.log("EMPTY MESSAGE, DO NOTHING")
-      console.log(messages.length)
-    }
-  }
-
-  if (!conversationsList) return null
 
   return (
     <div>
@@ -138,7 +96,6 @@ export default function Conversations() {
           .then(function (response) {
             console.log("UPDATE CONTACT SUCCESS:")
             console.log(response)
-            getConversations()
           })
           .catch(function (error) {
             console.log("UPDATE CONTACT CATCH:")
@@ -165,7 +122,6 @@ export default function Conversations() {
           .then(function (response) {
             console.log("ARCHIVE CONVERSATION SUCCESS:")
             console.log(response)
-            getConversations()
             window.location = "./"
           })
           .catch(function (error) {

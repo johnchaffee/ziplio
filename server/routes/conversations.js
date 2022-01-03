@@ -62,9 +62,8 @@ router.put("/", (req, res, next) => {
   console.log("UPDATE CONVERSATION")
   console.log(req.body)
   twilio_number = process.env.TWILIO_NUMBER
-  console.log(`TWILIO NUMBER BEFORE: ${twilio_number}`)
+  console.log(`TWILIO NUMBER: ${twilio_number}`)
   twilioNumber(req.body.mobile_number)
-  console.log(`TWILIO NUMBER AFTER: ${twilio_number}`)
   // Set contact_name
   if (req.body.contact_name != null) {
     conversationObject = {
