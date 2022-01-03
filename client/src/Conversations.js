@@ -78,9 +78,7 @@ export default function Conversations({ conversationsList }) {
 
   function updateContactPrompt(mobile_number) {
     console.log("updateContactPrompt()")
-    console.log("MOBILE NUMBER")
-    console.log(mobile_number)
-    console.log(mobile_number)
+    console.log("MOBILE NUMBER: ", mobile_number)
     const contact_name = prompt("Enter contact name")
     if (contact_name != null) {
       console.log("UPDATE CONTACT: " + contact_name)

@@ -107,11 +107,12 @@ async function nameConversation(request, response) {
   try {
     const { contact_name, conversation_id } = request
     const result = await pool.query(
-      "UPDATE conversations SET contact_name = $1 WHERE conversation_id = $2 RETURNING id, unread_count",
+      "UPDATE conversations SET contact_name = $1 WHERE conversation_id = $2 RETURNING id, unread_count, date_updated",
       [contact_name, conversation_id]
     )
     conversationObject.id = result.rows[0].id
     conversationObject.unread_count = result.rows[0].unread_count
+    conversationObject.date_updated = result.rows[0].date_updated
     console.log("conversationObject AFTER result: " , conversationObject)
   } catch (err) {
     console.error(err)

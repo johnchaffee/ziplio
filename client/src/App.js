@@ -79,7 +79,8 @@ export default function App() {
         let updateConversationList = conversationsList.filter(
           (conversation) => conversation.id !== messages[0].id
         )
-        updateConversationList.unshift(messages[0])
+        updateConversationList.push(messages[0])
+        updateConversationList.sort((a,b) => a.date_updated.localeCompare(b.date_updated)).reverse()
         console.log("UPDATE CONVERSATION LIST: ", updateConversationList)
         setConversationsList(updateConversationList)
       }
