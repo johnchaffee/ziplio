@@ -76,7 +76,9 @@ export default function App() {
         // renderConversationList(messages)
         console.log("RENDER CONVERSATION LIST")
         console.log("MESSAGES[0]: ", messages[0])
-        let updateConversationList = conversationsList.filter(conversation => conversation.id !== messages[0].id)
+        let updateConversationList = conversationsList.filter(
+          (conversation) => conversation.id !== messages[0].id
+        )
         updateConversationList.unshift(messages[0])
         console.log("UPDATE CONVERSATION LIST: ", updateConversationList)
         setConversationsList(updateConversationList)
@@ -92,13 +94,17 @@ export default function App() {
 
   return (
     <>
-      <div className="App">
-        <h2>SendMessage</h2>
-        <SendMessage />
-        <h2>Conversations</h2>
-        <Conversations conversationsList={conversationsList} />
-        <h2>Messages</h2>
-        <Messages messagesList={messagesList} />
+      <div className="SplitPane">
+        <div className="SplitPane-left">
+          <h2>Conversations</h2>
+          <Conversations conversationsList={conversationsList} />
+        </div>
+        <div className="SplitPane-right">
+          <h2>Messages</h2>
+          <Messages messagesList={messagesList} />
+          <h2>SendMessage</h2>
+          <SendMessage />
+        </div>
       </div>
     </>
   )
@@ -120,8 +126,14 @@ console.log(`URL PARAM MOBILE NUMBER: ${mobileNumber}`)
 const host = window.location.origin
 console.log(`HOST: ${host}`)
 
-const wsHost = host.replace(/^http/, "ws").replace("3000", "3001")
+let wsHost
+if (process.env.NODE_ENV === "development") {
+  wsHost = host.replace(/^http/, "ws").replace("3000", "3001")
+} else {
+  wsHost = host.replace(/^http/, "ws")
+}
 console.log(`WSHOST: ${wsHost}`)
+
 const wsClient = new WebSocket(wsHost)
 
 wsClient.onopen = () => {

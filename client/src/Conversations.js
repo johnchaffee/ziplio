@@ -12,8 +12,7 @@ export default function Conversations({ conversationsList }) {
 
       {conversationsList.map((conversation) => (
         <p key={conversation.id}>
-          {conversation.contact_name}:{" "}
-          {conversation.conversation_id.split(";")[1]}
+          {conversation.contact_name}: {conversation.conversation_id.split(";")[1]}
           <button
             className="btn btn-light p-0"
             onClick={() =>
