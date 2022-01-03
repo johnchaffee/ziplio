@@ -23,7 +23,7 @@ if (app_host_name === "localhost") {
 
 // CREATE MESSAGE
 async function createMessage(request, response) {
-  console.log("createMessage()")
+  console.log("createMessage() request:")
   console.log(request)
   try {
     const {
@@ -47,8 +47,8 @@ async function createMessage(request, response) {
         media_url,
       ]
     )
-    console.log(result.rows[0])
     messageObject.id = result.rows[0].id
+    console.log("messageObject result: " , messageObject)
   } catch (err) {
     console.error(err)
     // res.send("Error " + err);
@@ -59,7 +59,7 @@ async function createMessage(request, response) {
 
 // CREATE OR UPDATE CONVERSATION
 async function updateConversation(request, response) {
-  console.log("updateConversation()")
+  console.log("updateConversation() request:")
   console.log(request)
   // Outgoing message or message read event, reset unread_count
   if (request.unread_count === 0) {
@@ -86,10 +86,10 @@ async function updateConversation(request, response) {
         "INSERT INTO conversations (date_updated, conversation_id, unread_count, status) VALUES ($1, $2, $3, $4) ON CONFLICT (conversation_id) DO UPDATE SET date_updated = EXCLUDED.date_updated, unread_count = conversations.unread_count + EXCLUDED.unread_count, status = EXCLUDED.status RETURNING id, unread_count, contact_name",
         [date_updated, conversation_id, unread_count, status]
       )
-      console.log(result.rows[0].contact_name)
       conversationObject.id = result.rows[0].id
       conversationObject.unread_count = result.rows[0].unread_count
       conversationObject.contact_name = result.rows[0].contact_name
+      console.log("conversationObject result: " , conversationObject)
     } catch (err) {
       console.error(err)
       // res.send("Error " + err);
@@ -102,17 +102,23 @@ async function updateConversation(request, response) {
 // NAME CONVERSATION
 async function nameConversation(request, response) {
   console.log("nameConversation()")
-  console.log(request)
+  console.log("nameConversation request: ", request)
+  console.log("nameConversation : conversationObject BEFORE", conversationObject)
   try {
     const { contact_name, conversation_id } = request
     const result = await pool.query(
-      "UPDATE conversations SET contact_name = $1 WHERE conversation_id = $2",
+      "UPDATE conversations SET contact_name = $1 WHERE conversation_id = $2 RETURNING id, unread_count",
       [contact_name, conversation_id]
     )
+    conversationObject.id = result.rows[0].id
+    conversationObject.unread_count = result.rows[0].unread_count
+    console.log("conversationObject AFTER result: " , conversationObject)
   } catch (err) {
     console.error(err)
     // res.send("Error " + err);
   }
+  // Send conversation to websocket clients
+  client.updateWebsocketClient(conversationObject)
 }
 
 // ARCHIVE CONVERSATION
