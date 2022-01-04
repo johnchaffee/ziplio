@@ -3,9 +3,12 @@ import React from "react"
 export default function Messages({ messagesList }) {
   console.log("MESSAGES LIST: ", messagesList)
   return (
-    <div>
+    <div className="content">
       {messagesList.map((message) => (
-        <p key={message.id}>{message.body}</p>
+        <div key={message.id} className={message.direction}>
+          <div className="message-bubble">{message.body}</div>
+          <div className="message-footer">Twilio • Time</div>
+        </div>
       ))}
     </div>
   )

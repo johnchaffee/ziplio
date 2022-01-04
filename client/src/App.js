@@ -4,6 +4,7 @@ import "./App.css"
 import SendMessage from "./SendMessage"
 import Messages from "./Messages"
 import Conversations from "./Conversations"
+import ConversationButtons from "./ConversationButtons"
 
 export default function App() {
   console.log("RENDER APP")
@@ -80,7 +81,9 @@ export default function App() {
           (conversation) => conversation.id !== messages[0].id
         )
         updateConversationList.push(messages[0])
-        updateConversationList.sort((a,b) => a.date_updated.localeCompare(b.date_updated)).reverse()
+        updateConversationList
+          .sort((a, b) => a.date_updated.localeCompare(b.date_updated))
+          .reverse()
         console.log("UPDATE CONVERSATION LIST: ", updateConversationList)
         setConversationsList(updateConversationList)
       }
@@ -95,18 +98,16 @@ export default function App() {
 
   return (
     <>
-      <div className="SplitPane">
-        <div className="SplitPane-left">
-          <h2>Conversations</h2>
-          <Conversations conversationsList={conversationsList} />
-        </div>
-        <div className="SplitPane-right">
-          <h2>Messages</h2>
+      <div id="container">
+        <Conversations conversationsList={conversationsList} />
+        <div id="messages" className="column">
+          <ConversationButtons conversationsList={conversationsList} />
           <Messages messagesList={messagesList} />
-          <h2>SendMessage</h2>
           <SendMessage />
         </div>
       </div>
+
+
     </>
   )
 }

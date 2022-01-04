@@ -26,16 +26,15 @@ export default function SendMessage() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Body:
-        <input
-          type="text"
-          value={messageBody}
-          onChange={(e) => setMessageBody(e.target.value)}
-        />
-      </label>
-      <input type="submit" value="Submit" />
+    <form className="send-message-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="send-message-input"
+        placeholder="Enter your message here"
+        value={messageBody}
+        onChange={(e) => setMessageBody(e.target.value)}
+      />
+      <input type="submit" value="Send" />
     </form>
   )
 }
