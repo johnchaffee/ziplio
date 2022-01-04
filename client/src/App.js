@@ -41,6 +41,8 @@ export default function App() {
     const messages = JSON.parse(event.data)
     console.log("CLIENT ONMESSAGE")
     console.log(messages)
+    console.log("messages.length: ", messages.length)
+    console.log("messages[0].type: ", messages[0].type)
     // Play Audio for incoming and outgoing messages
     if (messages.length === 1 && messages[0].type === "messageCreated") {
       const now = Date.parse(new Date())
@@ -59,9 +61,12 @@ export default function App() {
     if (messages.length > 0) {
       messages.forEach((thisMessage) => {
         // If type is messagecreated and matches selected conversation, render message
+        console.log("thisMessage.type: ", thisMessage.type)
+        console.log("thisMessage.mobile_number: ", thisMessage.mobile_number)
+        console.log(`mobileNumber:${mobileNumber}`)
         if (
           thisMessage.type === "messageCreated" &&
-          thisMessage.mobile_number === mobileNumber
+          thisMessage.mobile_number === `+${mobileNumber.replace(" ", "")}`
         ) {
           console.log("APPEND MESSAGE")
           console.log("THIS MESSAGE: ", thisMessage)
@@ -101,13 +106,11 @@ export default function App() {
       <div id="container">
         <Conversations conversationsList={conversationsList} />
         <div id="messages" className="column">
-          <ConversationButtons conversationsList={conversationsList} />
+          <ConversationButtons />
           <Messages messagesList={messagesList} />
           <SendMessage />
         </div>
       </div>
-
-
     </>
   )
 }

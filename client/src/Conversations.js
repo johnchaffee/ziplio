@@ -1,7 +1,6 @@
 import axios from "axios"
 import React from "react"
 import "./App.css"
-import { mobileNumber } from "./App"
 
 export default function Conversations({ conversationsList }) {
   console.log("RENDER CONVERSATIONS")

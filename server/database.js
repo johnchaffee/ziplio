@@ -103,7 +103,7 @@ async function updateConversation(request, response) {
 async function nameConversation(request, response) {
   console.log("nameConversation()")
   console.log("nameConversation request: ", request)
-  console.log("nameConversation : conversationObject BEFORE", conversationObject)
+  console.log("nameConversation conversationObject BEFORE", conversationObject)
   try {
     const { contact_name, conversation_id } = request
     const result = await pool.query(
@@ -113,7 +113,7 @@ async function nameConversation(request, response) {
     conversationObject.id = result.rows[0].id
     conversationObject.unread_count = result.rows[0].unread_count
     conversationObject.date_updated = result.rows[0].date_updated
-    console.log("conversationObject AFTER result: " , conversationObject)
+    console.log("nameConversation conversationObject AFTER result: " , conversationObject)
   } catch (err) {
     console.error(err)
     // res.send("Error " + err);

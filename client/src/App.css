@@ -19,7 +19,7 @@ body {
   margin: auto; /* center-align the container */
   max-width: 960px;
   padding: 20px;
-  height: calc(100vh - 40px); /* subtract top/bottom padding from height */
+  height: 100vh;
   font-family: sans-serif;
   font-size: 1em;
   line-height: 1.25em;

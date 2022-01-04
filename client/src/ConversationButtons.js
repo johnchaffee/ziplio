@@ -3,8 +3,8 @@ import React from "react"
 import "./App.css"
 import { mobileNumber } from "./App"
 
-export default function ConversationButtons({ conversationsList }) {
-  console.log("RENDER CONVERSATIONS")
+export default function ConversationButtons() {
+  console.log("RENDER CONVERSATION BUTTONS")
 
   return (
     <>
