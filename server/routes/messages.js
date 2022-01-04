@@ -34,7 +34,7 @@ router.get("/", (req, res) => {
   let mobileNumberQuery = ""
   // Check if query param object is greater than empty object {} length of 2
   if (queryObjSize > 2) {
-    mobileNumberQuery = `+${req.query.mobile.replace(" ", "")}`
+    mobileNumberQuery = `${req.query.mobile.replace(" ", "+")}`
   }
 
   async function getMessages(mobileNumberQuery) {

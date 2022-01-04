@@ -16,14 +16,14 @@ export default function ConversationButtons() {
               className="header-icon"
               src="contact.png"
               alt="name conversation"
-              onClick={() => updateContactPrompt(`+${mobileNumber.replace(" ", "")}`)}
+              onClick={() => updateContactPrompt(mobileNumber)}
             />
             <img
               className="header-icon"
               src="archive.png"
               alt="archive conversation"
               onClick={() =>
-                archiveConversationButton(`+${mobileNumber.replace(" ", "")}`, "closed")
+                archiveConversationButton(mobileNumber, "closed")
               }
             />
             <img
@@ -31,7 +31,7 @@ export default function ConversationButtons() {
               src="delete.png"
               alt="delete conversation"
               onClick={() =>
-                archiveConversationButton(`+${mobileNumber.replace(" ", "")}`, "deleted")
+                archiveConversationButton(mobileNumber, "deleted")
               }
             />
           </div>

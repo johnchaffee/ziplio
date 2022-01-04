@@ -66,7 +66,7 @@ export default function App() {
         console.log(`mobileNumber:${mobileNumber}`)
         if (
           thisMessage.type === "messageCreated" &&
-          thisMessage.mobile_number === `+${mobileNumber.replace(" ", "")}`
+          thisMessage.mobile_number === mobileNumber
         ) {
           console.log("APPEND MESSAGE")
           console.log("THIS MESSAGE: ", thisMessage)
@@ -117,16 +117,17 @@ export default function App() {
 
 const urlParams = new URLSearchParams(window.location.search)
 console.log(`urlParams: ${urlParams}`)
-const mobileParam = urlParams.get("mobile")
+const mobileParam = urlParams.get("mobile") || ""
 console.log(`mobileParam: ${mobileParam}`)
-const mobileParamEncoded = encodeURIComponent(urlParams.get("mobile")) // %2B12065551111
-console.log(`mobileParamEncoded: ${mobileParamEncoded}`)
-const mobileParamDecoded = decodeURIComponent(mobileParam) // +12065551111
-console.log(`mobileParamDecoded: ${mobileParamDecoded}`)
+// const mobileParamEncoded = encodeURIComponent(urlParams.get("mobile")) // %2B12065551111
+// console.log(`mobileParamEncoded: ${mobileParamEncoded}`)
+// const mobileParamDecoded = decodeURIComponent(mobileParam) // +12065551111
+// console.log(`mobileParamDecoded: ${mobileParamDecoded}`)
 // let mobile_number = mobileParamDecoded
 // console.log(`URL PARAM MOBILE NUMBER: ${mobile_number}`)
-export const mobileNumber = mobileParamDecoded
-console.log(`URL PARAM MOBILE NUMBER: ${mobileNumber}`)
+console.log("REPLACE SPACE WITH +: ", mobileParam.replace(" ", "+"))
+export const mobileNumber = mobileParam.replace(" ", "+")
+console.log(`mobileNumber: ${mobileNumber}`)
 
 const host = window.location.origin
 console.log(`HOST: ${host}`)
