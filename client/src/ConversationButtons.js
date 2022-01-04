@@ -1,6 +1,7 @@
 import axios from "axios"
 import React from "react"
 import "./App.css"
+import { mobileNumber } from "./App"
 
 export default function ConversationButtons({ conversationsList }) {
   console.log("RENDER CONVERSATIONS")
@@ -9,26 +10,32 @@ export default function ConversationButtons({ conversationsList }) {
     <>
       <div className="header">
         <div className="header-title">Messages</div>
-        <div className="header-icon-wrapper">
-          <img
-            className="header-icon"
-            src="contact.png"
-            alt="name conversation"
-            onClick={() => updateContactPrompt("+12063996576")}
-          />
-          <img
-            className="header-icon"
-            src="archive.png"
-            alt="archive conversation"
-            onClick={() => archiveConversationButton("+12063996576", "closed")}
-          />
-          <img
-            className="header-icon"
-            src="delete.png"
-            alt="delete conversation"
-            onClick={() => archiveConversationButton("+12063996576", "deleted")}
-          />
-        </div>
+        {mobileNumber !== "null" &&  (
+          <div className="header-icon-wrapper">
+            <img
+              className="header-icon"
+              src="contact.png"
+              alt="name conversation"
+              onClick={() => updateContactPrompt(`+${mobileNumber.replace(" ", "")}`)}
+            />
+            <img
+              className="header-icon"
+              src="archive.png"
+              alt="archive conversation"
+              onClick={() =>
+                archiveConversationButton(`+${mobileNumber.replace(" ", "")}`, "closed")
+              }
+            />
+            <img
+              className="header-icon"
+              src="delete.png"
+              alt="delete conversation"
+              onClick={() =>
+                archiveConversationButton(`+${mobileNumber.replace(" ", "")}`, "deleted")
+              }
+            />
+          </div>
+        )}
       </div>
     </>
   )

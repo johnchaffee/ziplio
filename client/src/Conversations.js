@@ -1,6 +1,7 @@
 import axios from "axios"
 import React from "react"
 import "./App.css"
+import { mobileNumber } from "./App"
 
 export default function Conversations({ conversationsList }) {
   console.log("RENDER CONVERSATIONS")
@@ -21,7 +22,11 @@ export default function Conversations({ conversationsList }) {
         </div>
         <div className="content">
           {conversationsList.map((conversation) => (
-            <div className="conversation-card" key={conversation.id}>
+            <div
+              className="conversation-card"
+              key={conversation.id}
+              onClick={() => selectConversation(conversation.conversation_id.split(";")[1])}
+            >
               <div>
                 <span className="conversation-badge">4</span>
                 <img
@@ -65,6 +70,15 @@ export default function Conversations({ conversationsList }) {
             console.log(error)
           })
       }
+    }
+  }
+
+  function selectConversation(mobile_number) {
+    console.log("selectConversation()")
+    console.log(mobile_number)
+    if (mobile_number != null) {
+      console.log(`SELECT CONVERSATION: ${mobile_number}`)
+      window.location = `./?mobile=${mobile_number}`
     }
   }
 }
