@@ -27,7 +27,9 @@ export default function Conversations({ conversationsList }) {
               onClick={() => selectConversation(conversation.conversation_id.split(";")[1])}
             >
               <div>
-                <span className="conversation-badge">4</span>
+              {conversation.unread_count > 0 &&  (
+                <span className="conversation-badge">{conversation.unread_count}</span>
+              )}
                 <img
                   className="conversation-icon"
                   src="conversation.png"
