@@ -76,6 +76,15 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
+.selected {
+  font-weight: 600;
+  background-color: #edeff2;
+}
+
+div.conversation-card:hover {
+  background-color: #edeff2;
+}
+
 .conversation-badge {
   font-size: 60%;
   color: white;
