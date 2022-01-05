@@ -83,9 +83,9 @@ body {
   padding: 3px 6px;
   border-radius: 16px;
   position: relative;
-  top: -9px;
-  margin-left: -21px;
-  right: -19px;
+  top: -12px;
+  margin-left: -17px;
+  right: -14px;
 }
 
 .conversation-icon {
@@ -96,6 +96,8 @@ body {
 .outbound {
   text-align: left;
   margin: 20px 25% 0 20px;
+  float: left;
+  clear: both;
 }
 
 .outbound > .message-bubble {
@@ -105,6 +107,7 @@ body {
   border-bottom-left-radius: 0;
   text-align: left;
   color: black;
+  width: fit-content;
 }
 
 .outbound > .message-footer {
@@ -116,6 +119,8 @@ body {
 .inbound {
   text-align: right;
   margin: 20px 20px 0 25%;
+  float: right;
+  clear: both;
 }
 
 .inbound > .message-bubble {
@@ -125,6 +130,7 @@ body {
   border-bottom-right-radius: 0;
   text-align: right;
   color: white;
+  width: fit-content;
 }
 
 .inbound > .message-footer {
