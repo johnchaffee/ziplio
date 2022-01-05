@@ -83,6 +83,7 @@ body {
 
 div.conversation-card:hover {
   background-color: #edeff2;
+  cursor: pointer;
 }
 
 .conversation-badge {
