@@ -105,10 +105,13 @@ router.post("/", (req, res, next) => {
   }
   axios(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data))
+      console.log("POST /messages RESPONSE.STATUS:", response.status)
+      console.log("POST /messages RESPONSE.STATUSTEXT:", response.statusText)
+      console.log("POST /messages RESPONSE.DATA:", response.data)
     })
     .catch(function (error) {
-      console.log(error)
+      console.log("POST /messages ERROR:", error)
+      console.log("POST /messages ERROR.MESSAGE:", error.message)
     })
   // res.sendStatus(200);
 })
