@@ -88,6 +88,7 @@ router.put("/", (req, res, next) => {
       type: "conversationArchived",
       conversation_id: `${twilio_number};${req.body.mobile_number}`,
       status: req.body.status,
+      unread_count: 0,
     }
     if (req.body.status === "deleted") {
       // Delete all associated messages

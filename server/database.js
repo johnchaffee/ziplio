@@ -153,10 +153,10 @@ async function archiveConversation(request, response) {
   console.log("archiveConversation conversationObject BEFORE", conversationObject)
   console.log(request)
   try {
-    const { status, conversation_id } = request
+    const { status, conversation_id, unread_count } = request
     const result = await pool.query(
-      "UPDATE conversations SET status = $1 WHERE conversation_id = $2 RETURNING id",
-      [status, conversation_id]
+      "UPDATE conversations SET status = $1, unread_count = $3 WHERE conversation_id = $2 RETURNING id",
+      [status, conversation_id, unread_count]
     )
     conversationObject.id = result.rows[0].id
     console.log("archiveConversation conversationObject AFTER result: " , conversationObject)
