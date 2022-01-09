@@ -86,6 +86,22 @@ export default function Conversations({ conversationsList }) {
     console.log(mobile_number)
     if (mobile_number != null) {
       console.log(`SELECT CONVERSATION: ${mobile_number}`)
+      resetUnreadCount(mobile_number)
+      function resetUnreadCount(mobile_number) {
+        axios
+          .put("./conversations", {
+            unread_count: 0,
+            mobile_number: mobile_number,
+          })
+          .then(function (response) {
+            console.log("RESET UNREAD COUNT SUCCESS:")
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log("RESET UNREAD COUNT CATCH:")
+            console.log(error)
+          })
+      }
       window.location = `./?mobile=${mobile_number}`
     }
   }

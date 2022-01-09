@@ -99,6 +99,30 @@ async function updateConversation(request, response) {
   client.updateWebsocketClient(conversationObject)
 }
 
+// VIEWED CONVERSATION -> RESET UNREAD COUNT
+async function viewedConversation(request, response) {
+  console.log("viewedConversation()")
+  console.log("viewedConversation request: ", request)
+  console.log("viewedConversation conversationObject BEFORE", conversationObject)
+  try {
+    const { unread_count, conversation_id } = request
+    const result = await pool.query(
+      "UPDATE conversations SET unread_count = $1 WHERE conversation_id = $2 RETURNING id, unread_count, contact_name, date_updated",
+      [unread_count, conversation_id]
+    )
+    conversationObject.id = result.rows[0].id
+    conversationObject.unread_count = result.rows[0].unread_count
+    conversationObject.contact_name = result.rows[0].contact_name
+    conversationObject.date_updated = result.rows[0].date_updated
+    console.log("viewedConversation conversationObject AFTER result: " , conversationObject)
+  } catch (err) {
+    console.error(err)
+    // res.send("Error " + err);
+  }
+  // Send conversation to websocket clients
+  client.updateWebsocketClient(conversationObject)
+}
+
 // NAME CONVERSATION
 async function nameConversation(request, response) {
   console.log("nameConversation()")
@@ -162,6 +186,7 @@ async function deleteMessages(request, response) {
 module.exports = {
   createMessage,
   updateConversation,
+  viewedConversation,
   nameConversation,
   archiveConversation,
   deleteMessages,

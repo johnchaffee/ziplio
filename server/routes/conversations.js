@@ -64,7 +64,7 @@ router.put("/", (req, res, next) => {
   twilio_number = process.env.TWILIO_NUMBER
   console.log(`TWILIO NUMBER: ${twilio_number}`)
   twilioNumber(req.body.mobile_number)
-  // Set contact_name
+  // Set contact_name -> db.nameConversation
   if (req.body.contact_name != null) {
     conversationObject = {
       type: "conversationContactUpdated",
@@ -74,7 +74,16 @@ router.put("/", (req, res, next) => {
     }
     console.log(conversationObject)
     db.nameConversation(conversationObject)
-  } else if (req.body.status != null) {
+  // Selected conversation, reset unread count -> db.viewedConversation
+} else if (req.body.unread_count != null) {
+    conversationObject = {
+      type: "conversationUpdated",
+      conversation_id: `${twilio_number};${req.body.mobile_number}`,
+      unread_count: req.body.unread_count,
+    }
+    db.viewedConversation(conversationObject)
+  // Archived or deleted conversation -> db.archiveConversation
+} else if (req.body.status != null) {
     conversationObject = {
       type: "conversationArchived",
       conversation_id: `${twilio_number};${req.body.mobile_number}`,
