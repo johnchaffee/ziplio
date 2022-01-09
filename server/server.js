@@ -1,15 +1,10 @@
 require("dotenv").config()
 const WebSocket = require("ws")
 const WebSocketServer = WebSocket.Server
-const path = require("path")
 const express = require("express")
-const port = process.env.PORT || 3001
 const app = express()
-const client = require("./client")
-const db = require("./database")
-let conversations = []
-let messages = []
-const limit = process.env.LIMIT
+const path = require("path")
+const port = process.env.PORT || 3001
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")))
@@ -59,14 +54,12 @@ const interval = setInterval(function ping() {
 }, 45000)
 
 // ON CONNECTION
-// On new client connection, send array of stored messages and conversations
+// New client websocket connection
 wsServer.on("connection", (socketClient) => {
   console.log("ON CONNECTION")
   console.log("Number of clients: ", wsServer.clients.size)
   socketClient.isAlive = true
   socketClient.on("pong", heartbeat)
-  // socketClient.send(JSON.stringify(messages))
-  // socketClient.send(JSON.stringify(conversations))
 
   // ON MESSAGE
   // This is triggered by the client.updateWebsocketClient() function, it sends a single item array
@@ -75,39 +68,15 @@ wsServer.on("connection", (socketClient) => {
     console.log("socketClient.on(message)")
     console.log(message)
     let messageObject = JSON.parse(message)
-    getConversations()
-      .then(function () {
-        console.log("forEach => client.send()")
-        wsServer.clients.forEach((client) => {
-          if (
-            client.readyState === WebSocket.OPEN &&
-            JSON.stringify(message).length > 2
-          ) {
-            client.send(JSON.stringify([messageObject]))
-          }
-        })
-      })
-      .catch(function (err) {
-        console.log("getConversations() CATCH")
-        console.log(err)
-      })
-    // GET ALL CONVERSATIONS FROM DB
-    async function getConversations() {
-      console.log("getConversations():")
-      try {
-        const result = await db.pool.query(
-          "SELECT * FROM conversations WHERE status = 'open' order by date_updated desc limit $1",
-          [limit]
-        )
-        conversations = result.rows
-        conversations.forEach((conversation) => {
-          conversation.type = "conversationUpdated"
-        })
-      } catch (err) {
-        console.log("getConversations() CATCH")
-        console.error(err)
+    console.log("forEach => client.send()")
+    wsServer.clients.forEach((client) => {
+      if (
+        client.readyState === WebSocket.OPEN &&
+        JSON.stringify(message).length > 2
+      ) {
+        client.send(JSON.stringify([messageObject]))
       }
-    }
+    })
   })
 
   // ON CLOSE
