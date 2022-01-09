@@ -46,7 +46,7 @@ router.get("/", (req, res) => {
         [mobileNumberQuery, limit]
       )
 
-      messages = result.rows.reverse()
+      const messages = result.rows.reverse()
       messages.forEach((message) => {
         message.type = "messageCreated"
       })

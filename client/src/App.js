@@ -11,7 +11,7 @@ export default function App() {
 
   // MESSAGES STATE
   const [messagesList, setMessagesList] = useState()
-  console.log("messagesList: \n", messagesList)
+  console.log("Render App messagesList: \n", messagesList)
 
   // ASYNC AXIOS GET MESSAGES
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function App() {
 
   // CONVERSATIONS STATE
   const [conversationsList, setConversationsList] = useState(null)
-  console.log("App conversationsList: \n", conversationsList)
+  console.log("Render App conversationsList: \n", conversationsList)
 
   // ASYNC AXIOS GET CONVERSATIONS
   useEffect(() => {
@@ -85,7 +85,10 @@ export default function App() {
         let updateConversationList = conversationsList.filter(
           (conversation) => conversation.id !== messages[0].id
         )
-        updateConversationList.push(messages[0])
+        // If conversation was archived, don't add it back to array
+        if (messages[0].type !== "conversationArchived") {
+          updateConversationList.push(messages[0])
+        }
         updateConversationList
           .sort((a, b) => a.date_updated.localeCompare(b.date_updated))
           .reverse()

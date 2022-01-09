@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
         "SELECT * FROM conversations WHERE status = 'open' order by date_updated desc limit $1",
         [limit]
       )
-      conversations = result.rows
+      const conversations = result.rows
       conversations.forEach((conversation) => {
         conversation.type = "conversationUpdated"
       })
@@ -74,10 +74,9 @@ router.put("/", (req, res, next) => {
     }
     console.log(conversationObject)
     db.nameConversation(conversationObject)
-    // client.updateWebsocketClient(conversationObject)
   } else if (req.body.status != null) {
     conversationObject = {
-      type: "conversationStatusUpdated",
+      type: "conversationArchived",
       conversation_id: `${twilio_number};${req.body.mobile_number}`,
       status: req.body.status,
     }
@@ -86,9 +85,7 @@ router.put("/", (req, res, next) => {
       db.deleteMessages(conversationObject)
     }
     db.archiveConversation(conversationObject)
-    // client.updateWebsocketClient(conversationObject)
   }
-  // db.updateConversation(conversationObject);
   res.sendStatus(200)
 })
 

@@ -125,17 +125,22 @@ async function nameConversation(request, response) {
 // ARCHIVE CONVERSATION
 async function archiveConversation(request, response) {
   console.log("archiveConversation()")
+  console.log("archiveConversation request: ", request)
+  console.log("archiveConversation conversationObject BEFORE", conversationObject)
   console.log(request)
   try {
     const { status, conversation_id } = request
     const result = await pool.query(
-      "UPDATE conversations SET status = $1 WHERE conversation_id = $2",
+      "UPDATE conversations SET status = $1 WHERE conversation_id = $2 RETURNING id",
       [status, conversation_id]
     )
+    conversationObject.id = result.rows[0].id
+    console.log("archiveConversation conversationObject AFTER result: " , conversationObject)
   } catch (err) {
     console.error(err)
     // res.send("Error " + err);
   }
+  client.updateWebsocketClient(conversationObject)
 }
 
 // DELETE MESSAGES
