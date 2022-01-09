@@ -33,21 +33,19 @@ export default function Conversations({ conversationsList }) {
                 selectConversation(conversation.conversation_id.split(";")[1])
               }
             >
-              <div>
-                {conversation.unread_count > 0 && (
-                  <span className="conversation-badge">
-                    {conversation.unread_count}
-                  </span>
-                )}
-                <img
-                  className="conversation-icon"
-                  src="conversation.png"
-                  alt="conversation"
-                />
-                {conversation.contact_name
-                  ? conversation.contact_name
-                  : conversation.conversation_id.split(";")[1]}
-              </div>
+              {conversation.unread_count > 0 && (
+                <span className="conversation-badge">
+                  {conversation.unread_count}
+                </span>
+              )}
+              <img
+                className="conversation-icon"
+                src="conversation.png"
+                alt="conversation"
+              />
+              {conversation.contact_name
+                ? conversation.contact_name
+                : conversation.conversation_id.split(";")[1]}
             </div>
           ))}
         </div>

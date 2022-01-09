@@ -72,6 +72,7 @@ body {
 }
 
 .conversation-card {
+  position: relative;
   padding: 30px 20px;
   border-bottom: 1px solid #ddd;
 }
@@ -87,15 +88,16 @@ div.conversation-card:hover {
 }
 
 .conversation-badge {
-  font-size: 60%;
+  position: absolute;
+  top: 28px;
+  left: 15px;
+  min-width: 20px;
+  min-height: 20px;
+  text-align: center;
+  font-size: 50%;
   color: white;
   background-color: rgba(255, 0, 0, 0.8);
-  padding: 3px 6px;
-  border-radius: 16px;
-  position: relative;
-  top: -12px;
-  margin-left: -17px;
-  right: -14px;
+  border-radius: 20px;
 }
 
 .conversation-icon {
