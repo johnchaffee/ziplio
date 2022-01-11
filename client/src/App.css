@@ -108,7 +108,6 @@ div.conversation-card:hover {
 .message-bubble {
   padding: 20px;
   border-radius: 20px;
-  border-bottom-left-radius: 0;
   width: fit-content;
 }
 
@@ -123,10 +122,18 @@ div.conversation-card:hover {
   clear: both;
 }
 
-.outbound > .message-bubble {
+.outbound.message-bubble {
+  border-bottom-left-radius: 0;
   background-color: #edeff2;
   text-align: left;
   color: black;
+}
+
+.outbound.message-footer {
+  margin-top: 0;
+  font-size: 0.8em;
+  padding: 4px;
+  color: gray;
 }
 
 .inbound {
@@ -136,13 +143,15 @@ div.conversation-card:hover {
   clear: both;
 }
 
-.inbound > .message-bubble {
+.inbound.message-bubble {
+  border-bottom-right-radius: 0;
   background-color: #2c7cb5;
   text-align: right;
   color: white;
 }
 
-.message-footer {
+.inbound.message-footer {
+  margin-top: 0;
   font-size: 0.8em;
   padding: 4px;
   color: gray;
