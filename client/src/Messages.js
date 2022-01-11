@@ -19,7 +19,10 @@ export default function Messages({ messagesList }) {
     <div className="content">
       {messagesList.map((message) => (
         <div key={message.id} className={message.direction} ref={divRef}>
-          <div className="message-bubble">{message.body}</div>
+          <div className="message-bubble">
+            {message.media_url !== null && <img src={message.media_url} />}
+            {message.body}
+          </div>
           <div className="message-footer">Twilio • Time</div>
         </div>
       ))}
