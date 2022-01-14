@@ -17,7 +17,7 @@ body {
 #container {
   display: flex; /* enables flex content for its children */
   margin: auto; /* center-align the container */
-  max-width: 960px;
+  max-width: 1100px;
   padding: 20px;
   height: 100vh;
   font-family: sans-serif;
@@ -26,7 +26,7 @@ body {
 }
 
 #conversations {
-  min-width: 200px;
+  min-width: 220px;
   background-color: white;
 }
 
