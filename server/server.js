@@ -20,6 +20,13 @@ app.use("/messages", messagesendRouter)
 const conversationsRouter = require("./routes/conversations")
 app.use("/conversations", conversationsRouter)
 
+// ACK ZIPWHIP WEBHOOKS
+// Ack Zipwhip Webhooks that are received on this server
+app.post(/\/(receive|progress|send|stop|comm)/, (req, res, next) => {
+  console.log("ACK ZIPWHIP WEBHOOK");
+  res.sendStatus(200);
+});
+
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
   console.log("* CATCHALL")
