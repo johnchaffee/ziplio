@@ -22,10 +22,12 @@ app.use("/conversations", conversationsRouter)
 
 // ACK ZIPWHIP WEBHOOKS
 // Ack Zipwhip Webhooks that are received on this server
-app.post(/\/(receive|progress|send|stop|comm)/, (req, res, next) => {
-  console.log("ACK ZIPWHIP WEBHOOK");
-  res.sendStatus(200);
-});
+app.post(/\/(receive|progress|send|stop|comm|status)/, (req, res, next) => {
+  console.log("ACK ZIPWHIP WEBHOOK")
+  // res.sendStatus(200);
+  // Reply with empty TWIML response
+  res.send("<Response></Response>")
+})
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
