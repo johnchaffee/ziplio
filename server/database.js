@@ -8,7 +8,7 @@ if (app_host_name === "localhost") {
   // App is hosted locally, connect to localhost
   pool = new Pool({
     host: "localhost",
-    database: "widget",
+    database: "ziplio",
     port: 5432,
   })
 } else {
