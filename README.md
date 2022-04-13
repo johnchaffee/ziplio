@@ -66,24 +66,31 @@ Note: When deploying to heroku, you will be prompted to enter the [environment v
 
     ```conf
     # LOCAL DEVELOPMENT ENV VARIABLES
-    PORT=3001  # Enter a port number for local development
-    NODE_ENV=development  # Required for local development
-    APP_HOST_NAME=localhost  # Required for local development
-    NGROK_URL=<unique_id>.ngrok.io  # Required for local development
+    # Enter a port number (e.g. '3001') for local development
+    PORT=3001
+    # Enter 'development' for local development
+    NODE_ENV=development
+    # Enter 'localhost' for local development
+    APP_HOST_NAME=localhost
+    # Enter your ngrok endpoint URL for local development
+    NGROK_URL=<unique_id>.ngrok.io
 
     # TWILIO ENVIRONMENT VARIABLES
-    TWILIO_NUMBER=<Your Twilio Phone Number>  # Available in Twilio Console
-    TWILIO_ACCOUNT_SID=<Your Twilio Account SID> # Available in Twilio Console Dashboard
-    TWILIO_AUTH_TOKEN=<Your Twilio Auth Token> # Available in Twilio Console > Phone Numbers
-    WHATSAPP_ID=<Your WhatsApp ID>  # Available in Twilio Console > Channels (optional)
-    FACEBOOK_MESSENGER_ID=<Your messenger ID>  # Available in Twilio Console > Channels (optional)
+    # Enter the following values available in Twilio Console
+    TWILIO_NUMBER=<Your Twilio Phone Number, e.g. +12065551234>
+    TWILIO_ACCOUNT_SID=<Your Twilio Account SID, e.g. AC0xxxxxxxxxx>
+    TWILIO_AUTH_TOKEN=<Your Twilio Auth Token, e.g. 34axxxxxxxxxxx>
+    WHATSAPP_ID=<Optional WhatsApp ID, e.g. whatsapp:+12065551234>
+    FACEBOOK_MESSENGER_ID=<Optional Messenger ID, e.g. messenger:123456789012345>
 
     # HTTP BASIC AUTH ENVIRONMENT VARIABLES
-    APP_USERNAME=<Your custom username>  # Username for logging in via HTTP Basic Auth
-    APP_PASSWORD=<Your custom password>  # Password for logging in via HTTP Basic Auth
+    # Enter the username and password that will be required to access the app
+    APP_USERNAME=<Your custom username>
+    APP_PASSWORD=<Your custom password>
 
     # OPTIONAL VARIABLES
-    LIMIT=20  # Number of conversations and messages returned from db. Defaults to 20. (optional)
+    # Number of conversations and messages returned from db. Defaults to 20. (optional)
+    LIMIT=20
     ```
 
 4.  Configure ngrok
