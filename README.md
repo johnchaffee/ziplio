@@ -45,7 +45,7 @@ Note: When deploying to heroku, you will be prompted to enter the [environment v
     ```
 
 2.  Install dependencies
-    
+
     The project includes two apps - a Node server app running on port 3001, and a React client app running on port 3000. You must install the dependencies for each seprately.
 
     To install the dependencies for the Node server, type the following in Terminal:
@@ -53,7 +53,7 @@ Note: When deploying to heroku, you will be prompted to enter the [environment v
     ```bash
     npm install
     ```
-    
+
     To install the dependencies for the React app, you must cd into the client directory then install its dependencies. Then cd back to the parent directory when done, by typing the following in Terminal
 
     ```bash
@@ -62,36 +62,22 @@ Note: When deploying to heroku, you will be prompted to enter the [environment v
     cd ..
     ```
 
-3.  <div id="env-variables"></div>Create a `.env` file in your root directory and enter the environment variables below.
+3.  <div id="env-variables"></div>Copy the `.env.example` file to a new file named `.env`. Then replace the placeholder values in the `.env` file with the values described below.
 
-    ```conf
-    # LOCAL DEVELOPMENT ENV VARIABLES
-    # Enter a port number (e.g. '3001') for local development
-    PORT=3001
-    # Enter 'development' for local development
-    NODE_ENV=development
-    # Enter 'localhost' for local development
-    APP_HOST_NAME=localhost
-    # Enter your ngrok endpoint URL for local development
-    NGROK_URL=<unique_id>.ngrok.io
-
-    # TWILIO ENVIRONMENT VARIABLES
-    # Enter the following values available in Twilio Console
-    TWILIO_NUMBER=<Your Twilio Phone Number, e.g. +12065551234>
-    TWILIO_ACCOUNT_SID=<Your Twilio Account SID, e.g. AC0xxxxxxxxxx>
-    TWILIO_AUTH_TOKEN=<Your Twilio Auth Token, e.g. 34axxxxxxxxxxx>
-    WHATSAPP_ID=<Optional WhatsApp ID, e.g. whatsapp:+12065551234>
-    FACEBOOK_MESSENGER_ID=<Optional Messenger ID, e.g. messenger:123456789012345>
-
-    # HTTP BASIC AUTH ENVIRONMENT VARIABLES
-    # Enter the username and password that will be required to access the app
-    APP_USERNAME=<Your custom username>
-    APP_PASSWORD=<Your custom password>
-
-    # OPTIONAL VARIABLES
-    # Number of conversations and messages returned from db. Defaults to 20. (optional)
-    LIMIT=20
-    ```
+    | Config value            | Description                                                             |
+    | ----------------------- | ----------------------------------------------------------------------- |
+    | `PORT`                  | Port number (e.g. '3001') for local development                         |
+    | `NGROK_URL`             | ngrok endpoint URL (e.g. 'bd1bc336a832.ngrok.io') for local development |
+    | `APP_HOST_NAME`         | Enter 'localhost' for local development                                 |
+    | `NODE_ENV`              | Enter 'development' for local development                               |
+    | `TWILIO_ACCOUNT_SID`    | Your Twilio Account SID (e.g. ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)       |
+    | `TWILIO_AUTH_TOKEN`     | Your Twilio Auth Token (e.g. 38xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)        |
+    | `TWILIO_NUMBER`         | Your Twilio Phone Number in E.164 format (e.g. +12065551234)            |
+    | `WHATSAPP_ID`           | Optional - Your WhatsApp ID (e.g. whatsapp:+12065551234)                |
+    | `FACEBOOK_MESSENGER_ID` | Optional = Your Messenger ID (e.g. messenger:123456789012345)           |
+    | `APP_USERNAME`          | Username required to login in via HTTP Basic Auth (e.g. 'foo')          |
+    | `APP_PASSWORD`          | Password required to login in via HTTP Basic Auth (e.g. 'bar')          |
+    | `LIMIT`                 | Optional - Number of records to fetch on load (default is 20)           |
 
 4.  Configure ngrok
 
