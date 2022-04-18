@@ -74,7 +74,7 @@ Note: When deploying to heroku, you will be prompted to enter the [environment v
     | `TWILIO_AUTH_TOKEN`     | Your Twilio Auth Token (e.g. 38xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)        |
     | `TWILIO_NUMBER`         | Your Twilio Phone Number in E.164 format (e.g. +12065551234)            |
     | `WHATSAPP_ID`           | Optional - Your WhatsApp ID (e.g. whatsapp:+12065551234)                |
-    | `FACEBOOK_MESSENGER_ID` | Optional = Your Messenger ID (e.g. messenger:123456789012345)           |
+    | `FACEBOOK_MESSENGER_ID` | Optional - Your Messenger ID (e.g. messenger:123456789012345)           |
     | `APP_USERNAME`          | Username required to login in via HTTP Basic Auth (e.g. 'foo')          |
     | `APP_PASSWORD`          | Password required to login in via HTTP Basic Auth (e.g. 'bar')          |
     | `LIMIT`                 | Optional - Number of records to fetch on load (default is 20)           |
